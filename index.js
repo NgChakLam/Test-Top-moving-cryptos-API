@@ -91,12 +91,13 @@ return result;
 }
 
 app.get('/', async (req, res) => {
-  
-  let crypto_list = await get_Crypto_Listings_Latest_from_Coin_Market_Cap(req.query.currency);
+  let currency = req.query.currency || 'USD';
+  console.log(currency);
+  let crypto_list = await get_Crypto_Listings_Latest_from_Coin_Market_Cap(currency);
   //console.log(crypto_list_json);
   if (crypto_list){
     let result=null
-    result=fiter_Top_Moving_Crypto_List_from_Coin_Market_Cap(crypto_list,req.query.currency);
+    result=fiter_Top_Moving_Crypto_List_from_Coin_Market_Cap(crypto_list,currency);
       res.json(result);
   }else{
     res.status(404).send( "Error")
